@@ -30,7 +30,7 @@ class ToDoListViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 3
+        return itemArray.count
     }
 
     
@@ -40,6 +40,10 @@ class ToDoListViewController: UITableViewController {
         cell.textLabel?.text = itemArray[indexPath.row]
 
         return cell
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
 //MARK:-TABLE VIEW DELEGATE METHOD
@@ -98,5 +102,22 @@ class ToDoListViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    @IBAction func addItemPressed(_ sender: UIBarButtonItem) {
+        
+        var textField = UITextField()
+        let alert = UIAlertController(title: "Add To Do Item", message: "", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
+            self.itemArray.append(textField.text!)
+            self.tableView.reloadData()
+        }
+        alert.addTextField { (actionTextField) in
+            actionTextField.placeholder = "Add Item"
+            textField = actionTextField
+        }
+        alert.addAction(action)
+        present(alert, animated: true, completion: nil)
+    }
+    
 
 }
